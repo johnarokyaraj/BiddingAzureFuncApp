@@ -27,9 +27,11 @@ namespace BidingAzureFuncApp
                           ConsumerGroup = "$Default")] KafkaEventData<string>[] events, ILogger log)
         {
             string deleteValue = string.Empty;
+            char s = '"';
+            string t = string.Empty;
             foreach (KafkaEventData<string> eventData in events)
             {
-                deleteValue = eventData.Value;
+                deleteValue = eventData.Value.Replace(s.ToString(), t);
                 log.LogInformation($"C# Kafka trigger function processed a message: {eventData.Value}");
             }
             try
